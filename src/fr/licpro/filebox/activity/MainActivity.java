@@ -14,17 +14,15 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 import fr.licpro.filebox.R;
 import fr.licpro.filebox.service.SyncService;
 import fr.licpro.filebox.service.sync.ConnectionSync;
+import fr.licpro.filebox.utils.FileboxConstant;
 
 public class MainActivity extends Activity implements OnClickListener
 {
-	/**
-	 * Data in the intent
-	 */
-	public static final String	SYNC_CLASS_INTENT	= "fr.licpro.filebox.syncData";
 	
 	/**
 	 * Broadcast receiver.
@@ -51,7 +49,7 @@ public class MainActivity extends Activity implements OnClickListener
 	{
 		super.onStart();
 		mSyncDoneReceiver = new SyncDoneReceiver();
-		registerReceiver(mSyncDoneReceiver, new IntentFilter("fr.iut.licpro.filebox.TOKENSUCESS"));
+		registerReceiver(mSyncDoneReceiver, new IntentFilter(FileboxConstant.TOKEN_SUCCESS));
 	}
 	
 	@Override
@@ -115,14 +113,24 @@ public class MainActivity extends Activity implements OnClickListener
 	{
 		if (view.getId() == R.id.btn_getToken)
 		{
-			Toast.makeText(getApplicationContext(), "Tentative de connexion ...", Toast.LENGTH_SHORT)
+			Toast.makeText(getApplicationContext(), FileboxConstant.TENTATIVE_CO, Toast.LENGTH_SHORT)
 			.show();		
 			
 			final Intent intent = new Intent(this, SyncService.class);
 			
-			ConnectionSync connectionSync = new ConnectionSync("jejebubu", "projet", getApplicationContext()); // remplacer les valeurs en dur par les valeurs saisies dans le formulaire
-			intent.putExtra(SYNC_CLASS_INTENT, connectionSync);
-			startService(intent);
+			String identifiant = ((EditText)findViewById(R.id.editTextIdentifiant)).getText().toString(); // jejebubu
+			String mdp = ((EditText)findViewById(R.id.editTextMdp)).getText().toString(); // projet
+			
+			if (identifiant != null && !identifiant.trim().equals("")
+					||
+				mdp != null && !mdp.trim().equals(""))
+			{
+				ConnectionSync connectionSync = new ConnectionSync(identifiant, mdp, getApplicationContext()); 
+				intent.putExtra(FileboxConstant.SYNC_CLASS_INTENT, connectionSync);
+				startService(intent);
+			}
+			else
+				Toast.makeText(getApplicationContext(), FileboxConstant.RENSEIGNEZ_ID_MDP, Toast.LENGTH_SHORT).show();
 		}
 	}
 	
@@ -134,13 +142,13 @@ public class MainActivity extends Activity implements OnClickListener
 		@Override
 		public void onReceive(final Context pParamContext, final Intent pParamIntent)
 		{
-			if (pParamIntent.getAction().equals("fr.iut.licpro.filebox.TOKENSUCESS"))
+			if (pParamIntent.getAction().equals(FileboxConstant.TOKEN_SUCCESS))
 			{
-				Toast.makeText(pParamContext, "Connexion réussie", Toast.LENGTH_SHORT).show();			
+				Toast.makeText(pParamContext, FileboxConstant.CONNEXION_REUSSIE, Toast.LENGTH_SHORT).show();			
 			}
-			else if (pParamIntent.getAction().equals("fr.iut.licpro.filebox.TOKENERROR"))
+			else if (pParamIntent.getAction().equals(FileboxConstant.TOKEN_ERROR))
 			{
-				Toast.makeText(pParamContext, "Connexion échouée", Toast.LENGTH_SHORT).show();	
+				Toast.makeText(pParamContext, FileboxConstant.CONNEXION_ECHOUEE, Toast.LENGTH_SHORT).show();	
 			}
 		}
 	}

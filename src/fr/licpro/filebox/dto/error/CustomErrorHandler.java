@@ -3,6 +3,9 @@
  */
 package fr.licpro.filebox.dto.error;
 
+import java.io.File;
+
+import fr.licpro.filebox.utils.FileboxConstant;
 import android.R.integer;
 import android.content.Context;
 import android.content.Intent;
@@ -37,8 +40,8 @@ public class CustomErrorHandler implements ErrorHandler {
 	{
 		HttpExceptionDto errorDto = (HttpExceptionDto) error.getBodyAs(HttpExceptionDto.class);
 
-		Intent it = new Intent ("fr.licpro.filebox.TOKENERROR");
-		it.setPackage("fr.licpro.filebox");
+		Intent it = new Intent (FileboxConstant.TOKEN_ERROR);
+		it.setPackage(FileboxConstant.PACKAGE);
 		if (errorDto != null)
 		{
 			it.putExtra(it.getAction(), errorDto);

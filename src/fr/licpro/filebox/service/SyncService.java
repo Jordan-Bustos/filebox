@@ -8,6 +8,7 @@ import android.content.Intent;
 import fr.licpro.filebox.dto.error.CustomErrorHandler;
 import fr.licpro.filebox.dto.response.TokenDto;
 import fr.licpro.filebox.service.json.JacksonConverter;
+import fr.licpro.filebox.utils.FileboxConstant;
 
 /**
  * Service for sync data
@@ -19,10 +20,6 @@ public class SyncService extends IntentService
 	 */
 	private static final String	TAG					= SyncService.class
 															.getSimpleName();
-	/**
-	 * Data in the intent
-	 */
-	public static final String	SYNC_CLASS_INTENT	= "fr.licpro.filebox.syncData";
 	/**
 	 * Client rest
 	 */
@@ -72,7 +69,7 @@ public class SyncService extends IntentService
 	protected void onHandleIntent(final Intent pIntent)
 	{
 		final ISync sync = (ISync) pIntent
-				.getSerializableExtra(SYNC_CLASS_INTENT);
+				.getSerializableExtra(FileboxConstant.SYNC_CLASS_INTENT);
 		sync.execute(getApplicationContext(), mRestClient);
 	}
 }

@@ -6,12 +6,49 @@
     tools:context="fr.licpro.filebox.activity.MainActivity"
     tools:ignore="MergeRootFrame" >
 
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/editTextMdp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="14dp"
+        android:text="@string/Identifiant" />
+
+    <EditText
+        android:id="@+id/editTextIdentifiant"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btn_getToken"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="76dp"
+        android:inputType="text"
+        android:ems="10" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/editTextMdp"
+        android:layout_alignLeft="@+id/textView1"
+        android:text="@string/mdp" />
+
+    <EditText
+        android:id="@+id/editTextMdp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editTextIdentifiant"
+        android:layout_below="@+id/editTextIdentifiant"
+        android:ems="10"
+        android:inputType="textPassword" />
+
     <Button
         android:id="@+id/btn_getToken"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/editTextMdp"
         android:layout_centerHorizontal="true"
-        android:text="Afficher Token" />
+        android:layout_marginTop="17dp"
+        android:text="@string/Connexion" />
 
 </RelativeLayout>
