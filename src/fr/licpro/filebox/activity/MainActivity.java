@@ -48,8 +48,10 @@ public class MainActivity extends Activity implements OnClickListener
 	protected void onStart()
 	{
 		super.onStart();
+		
 		mSyncDoneReceiver = new SyncDoneReceiver();
 		registerReceiver(mSyncDoneReceiver, new IntentFilter(FileboxConstant.TOKEN_SUCCESS));
+		registerReceiver(mSyncDoneReceiver, new IntentFilter(FileboxConstant.TOKEN_ERROR));
 	}
 	
 	@Override

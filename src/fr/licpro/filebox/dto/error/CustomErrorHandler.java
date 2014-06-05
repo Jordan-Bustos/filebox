@@ -9,6 +9,7 @@ import fr.licpro.filebox.utils.FileboxConstant;
 import android.R.integer;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import retrofit.ErrorHandler;
 import retrofit.RetrofitError;
 
@@ -48,7 +49,7 @@ public class CustomErrorHandler implements ErrorHandler {
 		}
 		
 		mContext.sendBroadcast(it);
-
+		
 		return error;
 
 	}

@@ -5,6 +5,7 @@ import retrofit.RestAdapter.LogLevel;
 import retrofit.android.AndroidLog;
 import android.app.IntentService;
 import android.content.Intent;
+import android.util.Log;
 import fr.licpro.filebox.dto.error.CustomErrorHandler;
 import fr.licpro.filebox.dto.response.TokenDto;
 import fr.licpro.filebox.service.json.JacksonConverter;
@@ -35,13 +36,23 @@ public class SyncService extends IntentService
 	public SyncService()
 	{
 		super(SyncService.class.getSimpleName());
-		mToken = new TokenDto();
+		mToken = new TokenDto();			
+	}
+	
+	
+	@Override
+	public void onCreate() 
+	{
+		super.onCreate();
+				
+		CustomErrorHandler customError = new CustomErrorHandler(getApplicationContext());
+				
 		final RestAdapter restAdapter = new RestAdapter
 				.Builder().setEndpoint("http://91.121.95.210:443/rest")
 				.setLog(new AndroidLog(SyncService.class.getName()))
 				.setLogLevel(LogLevel.FULL)
 				.setConverter(new JacksonConverter())
-				//.setErrorHandler(new CustomErrorHandler(getApplicationContext()))  //-> fait planter l'app
+				.setErrorHandler(customError)  //-> fait planter l'app
 				.build();
 		
 		mRestClient = restAdapter.create(IRestClient.class);
