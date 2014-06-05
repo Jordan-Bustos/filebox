@@ -35,7 +35,7 @@ public class SyncService extends IntentService
 	public SyncService()
 	{
 		super(SyncService.class.getSimpleName());
-		
+		mToken = new TokenDto();
 		final RestAdapter restAdapter = new RestAdapter
 				.Builder().setEndpoint("http://91.121.95.210:443/rest")
 				.setLog(new AndroidLog(SyncService.class.getName()))
@@ -45,7 +45,6 @@ public class SyncService extends IntentService
 				.build();
 		
 		mRestClient = restAdapter.create(IRestClient.class);
-		mToken = new TokenDto();
 	}
 
 	/**
