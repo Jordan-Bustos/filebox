@@ -41,7 +41,7 @@ public class SyncService extends IntentService
 				.setLog(new AndroidLog(SyncService.class.getName()))
 				.setLogLevel(LogLevel.FULL)
 				.setConverter(new JacksonConverter())
-				.setErrorHandler(new CustomErrorHandler(getApplicationContext()))
+				//.setErrorHandler(new CustomErrorHandler(getApplicationContext()))  //-> fait planter l'app
 				.build();
 		
 		mRestClient = restAdapter.create(IRestClient.class);
