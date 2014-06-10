@@ -3,15 +3,11 @@
  */
 package fr.licpro.filebox.dto.error;
 
-import java.io.File;
-
-import fr.licpro.filebox.utils.FileboxConstant;
-import android.R.integer;
-import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
 import retrofit.ErrorHandler;
 import retrofit.RetrofitError;
+import android.content.Context;
+import android.content.Intent;
+import fr.licpro.filebox.utils.FileboxConstant;
 
 /**
  * @author jordanbustos
@@ -25,8 +21,8 @@ public class CustomErrorHandler implements ErrorHandler {
 	private Context mContext;
 	
 	/**
-	 * Constructeur.
-	 * @param context le context.
+	 * Constructor.
+	 * @param context the context.
 	 */
 	public CustomErrorHandler(Context context)
 	{

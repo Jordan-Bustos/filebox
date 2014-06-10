@@ -22,22 +22,22 @@ public class FileDto extends GenericDto {
 	/**
      * File name
      */
-    private String name;
+    private String mName;
 
     /**
      * File id Hash
      */
-    private String hashId;
+    private String mHashId;
 
     /**
      * Is folder
      */
-    private Boolean isFolder;
+    private Boolean mIsFolder;
 
     /**
      * File type
      */
-    private FileTypeEnum fileType;
+    private FileTypeEnum mFileType;
 
     /**
      * Last modification date
@@ -53,12 +53,13 @@ public class FileDto extends GenericDto {
      * @param mimeType
      * @param pDate
      */
-    public FileDto(String name, String hashId, Boolean isFolder, FileTypeEnum mimeType, Date pDate) {
-        this.name = name;
-        this.hashId = hashId;
-        this.isFolder = isFolder;
-        this.fileType = mimeType;
-        this.lastModification = pDate;
+    public FileDto(String name, String hashId, Boolean isFolder, FileTypeEnum mimeType, Date pDate) 
+    {
+        setName(name);
+        setHashId(hashId);
+        setIsFolder(isFolder);
+        setFileType(mimeType);
+        setLastModification(pDate);
     }
 
     /**
@@ -68,35 +69,35 @@ public class FileDto extends GenericDto {
     }
 
     public String getName() {
-        return name;
+        return mName;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.mName = name;
     }
 
     public String getHashId() {
-        return hashId;
+        return mHashId;
     }
 
     public void setHashId(String hashId) {
-        this.hashId = hashId;
+        this.mHashId = hashId;
     }
 
     public Boolean isIsFolder() {
-        return isFolder;
+        return mIsFolder;
     }
 
     public void setIsFolder(Boolean isFolder) {
-        this.isFolder = isFolder;
+        this.mIsFolder = isFolder;
     }
 
     public FileTypeEnum getFileType() {
-        return fileType;
+        return mFileType;
     }
 
     public void setFileType(FileTypeEnum fileType) {
-        this.fileType = fileType;
+        this.mFileType = fileType;
     }
 
     public Date getLastModification() {

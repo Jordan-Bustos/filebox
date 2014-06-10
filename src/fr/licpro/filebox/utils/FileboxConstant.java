@@ -52,6 +52,11 @@ public final class FileboxConstant {
 	public static final String CONNEXION_ECHOUEE = "Connexion échouée";
 	
 	/**
+	 * Key of the main activity.
+	 */
+	public static final String ACTIVITY_MAIN = "Main activity";
+	
+	/**
 	 * Private constructor.
 	 */
 	private FileboxConstant() {

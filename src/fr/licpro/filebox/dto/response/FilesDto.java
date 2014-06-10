@@ -21,9 +21,9 @@ public class FilesDto extends HttpExceptionDto {
 	private static final long serialVersionUID = 8424984371301106333L;
 
 	/**
-     * List of file
+     * List of files
      */
-    private List<FileDto> listFile;
+    private List<FileDto> files;
 
     /**
      * Last update
@@ -31,18 +31,18 @@ public class FilesDto extends HttpExceptionDto {
     private Date lastUpdate;
 
     public FilesDto(List<FileDto> listFile) {
-        this.listFile = listFile;
+        this.files = listFile;
     }
 
     public FilesDto() {
     }
 
     public List<FileDto> getListFile() {
-        return listFile;
+        return files;
     }
 
     public void setListFile(List<FileDto> listFile) {
-        this.listFile = listFile;
+        this.files = listFile;
     }
 
     public Date getLastUpdate() {

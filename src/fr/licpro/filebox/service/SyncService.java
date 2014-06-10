@@ -5,7 +5,6 @@ import retrofit.RestAdapter.LogLevel;
 import retrofit.android.AndroidLog;
 import android.app.IntentService;
 import android.content.Intent;
-import android.util.Log;
 import fr.licpro.filebox.dto.error.CustomErrorHandler;
 import fr.licpro.filebox.dto.response.TokenDto;
 import fr.licpro.filebox.service.json.JacksonConverter;
@@ -59,7 +58,7 @@ public class SyncService extends IntentService
 	}
 
 	/**
-	 * Methode permettant de lister les fichiers d'un utilisateur.
+	 * List files of an user.
 	 */
 	public void listFiles()
 	{
@@ -67,8 +66,7 @@ public class SyncService extends IntentService
 	}
 
 	/**
-	 * Methode permettant de lister le contenu d'un fichier ou d'un dossier
-	 * utilisateur.
+	 * List the content of a file or a folder.
 	 */
 	public void listContentFile()
 	{

@@ -14,41 +14,34 @@ import fr.licpro.filebox.dto.response.TokenDto;
 public interface IRestClient
 {
 	/**
-	 * Permet de retourner le token.
+	 * Permit to get the token.
 	 * 
-	 * @param login
-	 *            Le login utilisateur.
-	 * @param password
-	 *            Le mot de passe utilisateur.
-	 * @return Le token.
+	 * @param login  Id of the user.
+	 * @param password  Password of the user.
+	 * @return The token.
 	 */
 	@PUT("/customer/token")
 	TokenDto getToken(@Query("login") String login,
 			@Query("password") String password);
 
 	/**
-	 * Permet de lister les fichiers
+	 * Permit to list files.
 	 * 
-	 * @param token
-	 *            Le token.
-	 * @param timestamp
-	 *            Date depuis le dernier appel.
-	 * @return La liste des fichiers associée au token.
+	 * @param token  The token.
+	 * @param timestamp  Last call date.
+	 * @return List of files.
 	 */
 	@GET("/file/{token}")
 	List<FilesDto> getFiles(@Path("token") String token,
 			@Query("data") String timestamp);
 
 	/**
-	 * Contenu d'un fichier ou dossier
+	 * Permit to get the content of a file or a folder.
 	 * 
-	 * @param token
-	 *            Le token.
-	 * @param hashid
-	 *            Le hash du fichier ou dossier à récupérer
-	 * @param timestamp
-	 *            Date depuis le dernier appel.
-	 * @return Le détail du fichier ou du dossier.
+	 * @param token  The token.
+	 * @param hashid   The hash of the file/folder geted.
+	 * @param timestamp   Last call date.
+	 * @return The detail of the file or folder.
 	 */
 	@GET("/file/{token}/{hashid}")
 	List<FilesDto> getContentFiles(@Path("token") String token,

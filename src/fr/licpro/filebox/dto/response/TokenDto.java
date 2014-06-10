@@ -16,24 +16,40 @@ public class TokenDto extends HttpExceptionDto {
 	 * Serial ID.
 	 */
 	private static final long serialVersionUID = -1693165302370775705L;
+	
 	/**
      * User token
      */
-    private String token;
+    private String mToken;
 
+    /**
+     * Constructor.
+     */
     public TokenDto() {
     }
 
+    /**
+     * Constructor complete.
+     * @param token the token.
+     */
     public TokenDto(String token) {
-        this.token = token;
+        setToken(token);
     }
 
+    /**
+     * Get the token.
+     * @return the token.
+     */
     public String getToken() {
-        return token;
+        return mToken;
     }
 
+    /**
+     * Set the token.
+     * @param token the token.
+     */
     public void setToken(String token) {
-        this.token = token;
+        mToken = token;
     }
 
 }

@@ -17,57 +17,55 @@ public class ConnectionSync extends AbstractSync<TokenDto> {
 	private static final long serialVersionUID = -7374379559890502602L;
 
 	/**
-	 * L'identifiant de connexion.
+	 * Id of connexion.
 	 */
-	private String login;
+	private String mLogin;
 
 	/**
-	 * Le mot de passe.
+	 * Password.
 	 */
-	private String password;
+	private String mPassword;
 
 	/**
-	 * Constructeur.
+	 * Constructor.
 	 * 
-	 * @param login
-	 *            l'identifiant de connexion.
-	 * @param password
-	 *            le mot de passe.
+	 * @param login id of connexion.
+	 * @param password the password.
 	 * @param context
 	 */
 	public ConnectionSync(String login, String password, Context context) {
-		this.login = login;
-		this.password = password;
+		this.mLogin = login;
+		this.mPassword = password;
 		this.mContext = context;
 	}
 
 	/**
-	 * Permet d'obtenir l'identifiant de connexion.
+	 * Permit to get the id of connexion.
 	 * 
-	 * @return L'identifiant de connexion.
+	 * @return The id of connexion.
 	 */
 	public String getLogin() {
-		return this.login;
+		return this.mLogin;
 	}
 
 	/**
-	 * Permet d'obtenir le mot de passe.
+	 * Permit to get the password.
 	 * 
-	 * @return Le mot de passe.
+	 * @return The password.
 	 */
 	public String getPassword() {
-		return this.password;
+		return this.mPassword;
 	}
 
 	@Override
 	protected TokenDto execute(final IRestClient pRestClient)
 			throws RetrofitError {
-		return pRestClient.getToken(login, password);
+		return pRestClient.getToken(mLogin, mPassword);
 	}
 
 	@Override
 	protected void onSuccess() {
-		// broadcast pour envoyer le token connexion done à l'interface
+		// broadcast for send the  connexion token done to the UI
 		Intent intent = new Intent(FileboxConstant.TOKEN_SUCCESS);
 		intent.setPackage(mContext.getPackageName());
 		mContext.sendBroadcast(intent);
@@ -75,7 +73,6 @@ public class ConnectionSync extends AbstractSync<TokenDto> {
 
 	@Override
 	protected void onError(final Exception e) {
-		// laisser vide -> utiliser retrofit
-		// cas spécifiques
+
 	}
 }

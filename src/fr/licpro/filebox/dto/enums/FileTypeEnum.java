@@ -23,12 +23,12 @@ public enum FileTypeEnum {
     /**
      * File mime-type
      */
-    private final String mimeType;
+    private final String mMimeType;
 
     /**
      * Extention
      */
-    private final String ext;
+    private final String mExt;
 
     /**
      * Default constructor
@@ -36,19 +36,19 @@ public enum FileTypeEnum {
      * @param pMimeType
      */
     private FileTypeEnum(String pMimeType, String pExt) {
-        mimeType = pMimeType;
-        ext = pExt;
+        mMimeType = pMimeType;
+        mExt = pExt;
     }
 
     public String getMimeType() {
-        return mimeType;
+        return mMimeType;
     }
 
     public static FileTypeEnum getType(String name) {
         FileTypeEnum ret = null;
         if (StringUtils.isNotBlank(name)) {
             for (FileTypeEnum type : FileTypeEnum.values()) {
-                if (name.endsWith(type.ext)) {
+                if (name.endsWith(type.mExt)) {
                     ret = type;
                 }
             }

@@ -15,15 +15,16 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 import fr.licpro.filebox.R;
 import fr.licpro.filebox.service.SyncService;
 import fr.licpro.filebox.service.sync.ConnectionSync;
+import fr.licpro.filebox.utils.ActivityContainer;
 import fr.licpro.filebox.utils.FileboxConstant;
 
 public class MainActivity extends Activity implements OnClickListener
 {
-	
 	/**
 	 * Broadcast receiver.
 	 */
@@ -37,23 +38,26 @@ public class MainActivity extends Activity implements OnClickListener
 		if (savedInstanceState == null)
 		{
 			getFragmentManager().beginTransaction()
-					.add(R.id.container, new PlaceholderFragment()).commit();
+			.add(R.id.container, new PlaceholderFragment()).commit();
 		}
 		// TODO Add intent to launch service
 		final Button btn_getToken = (Button) findViewById(R.id.btn_getToken);
 		btn_getToken.setOnClickListener(this);
+
+		// Save the activity
+		ActivityContainer.putActivity(FileboxConstant.ACTIVITY_MAIN, this);
 	}
-	
+
 	@Override
 	protected void onStart()
 	{
 		super.onStart();
-		
+
 		mSyncDoneReceiver = new SyncDoneReceiver();
 		registerReceiver(mSyncDoneReceiver, new IntentFilter(FileboxConstant.TOKEN_SUCCESS));
 		registerReceiver(mSyncDoneReceiver, new IntentFilter(FileboxConstant.TOKEN_ERROR));
 	}
-	
+
 	@Override
 	protected void onStop()
 	{
@@ -115,27 +119,28 @@ public class MainActivity extends Activity implements OnClickListener
 	{
 		if (view.getId() == R.id.btn_getToken)
 		{
-			Toast.makeText(getApplicationContext(), FileboxConstant.TENTATIVE_CO, Toast.LENGTH_SHORT)
-			.show();		
-			
+			//Toast.makeText(getApplicationContext(), FileboxConstant.TENTATIVE_CO, Toast.LENGTH_SHORT).show();
+			Crouton.makeText(this, FileboxConstant.TENTATIVE_CO, Style.INFO).show();
+
 			final Intent intent = new Intent(this, SyncService.class);
-			
+
 			String identifiant = ((EditText)findViewById(R.id.editTextIdentifiant)).getText().toString(); // jejebubu
 			String mdp = ((EditText)findViewById(R.id.editTextMdp)).getText().toString(); // projet
-			
+
 			if (identifiant != null && !identifiant.trim().equals("")
 					||
-				mdp != null && !mdp.trim().equals(""))
+					mdp != null && !mdp.trim().equals(""))
 			{
 				ConnectionSync connectionSync = new ConnectionSync(identifiant, mdp, getApplicationContext()); 
 				intent.putExtra(FileboxConstant.SYNC_CLASS_INTENT, connectionSync);
 				startService(intent);
 			}
 			else
-				Toast.makeText(getApplicationContext(), FileboxConstant.RENSEIGNEZ_ID_MDP, Toast.LENGTH_SHORT).show();
+				Crouton.makeText(this, FileboxConstant.RENSEIGNEZ_ID_MDP, Style.ALERT).show();
+			//Toast.makeText(getApplicationContext(), FileboxConstant.RENSEIGNEZ_ID_MDP, Toast.LENGTH_SHORT).show();			
 		}
 	}
-	
+
 	/**
 	 * Broadcast receiver.	
 	 */
@@ -146,11 +151,16 @@ public class MainActivity extends Activity implements OnClickListener
 		{
 			if (pParamIntent.getAction().equals(FileboxConstant.TOKEN_SUCCESS))
 			{
-				Toast.makeText(pParamContext, FileboxConstant.CONNEXION_REUSSIE, Toast.LENGTH_SHORT).show();			
+				//Toast.makeText(pParamContext, FileboxConstant.CONNEXION_REUSSIE, Toast.LENGTH_SHORT).show();
+				Crouton.makeText(ActivityContainer.getActivity(FileboxConstant.ACTIVITY_MAIN),
+						FileboxConstant.CONNEXION_REUSSIE, Style.CONFIRM).show();
+
 			}
 			else if (pParamIntent.getAction().equals(FileboxConstant.TOKEN_ERROR))
 			{
-				Toast.makeText(pParamContext, FileboxConstant.CONNEXION_ECHOUEE, Toast.LENGTH_SHORT).show();	
+				//Toast.makeText(pParamContext, FileboxConstant.CONNEXION_ECHOUEE, Toast.LENGTH_SHORT).show();
+				Crouton.makeText(ActivityContainer.getActivity(FileboxConstant.ACTIVITY_MAIN), 
+						FileboxConstant.CONNEXION_ECHOUEE, Style.ALERT).show();
 			}
 		}
 	}
