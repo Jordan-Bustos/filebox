@@ -70,6 +70,36 @@ public final class FileboxConstant {
 	 * User Identifiant.
 	 */
 	public static final String USERIDENTIFIANT = "userId";
+
+	/**
+	 * Yes.
+	 */
+	public static final String OUI = "Oui";
+	
+	/**
+	 * No.
+	 */
+	public static final String NON = "Non";
+
+	/**
+	 * FILES DTO
+	 */
+	public static final String FILESDTO = "File dto";
+
+	/**
+	 * File name token dto
+	 */
+	public static final String TOKEN_DTO = "TOKEN DTO";
+
+	/**
+	 * Token pref key.
+	 */
+	public static final String TOKEN_PREF = "TOKEN DTO KEY";
+
+	/**
+	 * User password.
+	 */
+	public static final String USERPASSWORD = "userpassword";
 	
 	/**
 	 * Private constructor.

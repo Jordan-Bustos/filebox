@@ -1,17 +1,21 @@
 package fr.licpro.filebox.activity;
 
-import fr.licpro.filebox.R;
-import fr.licpro.filebox.dto.commons.FileDto;
-import fr.licpro.filebox.utils.FileboxConstant;
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import fr.licpro.filebox.R;
+import fr.licpro.filebox.adapter.FileItemArrayAdapter;
+import fr.licpro.filebox.dto.commons.FileDto;
+import fr.licpro.filebox.dto.response.FilesDto;
+import fr.licpro.filebox.service.SyncService;
+import fr.licpro.filebox.service.sync.ListFilesSync;
+import fr.licpro.filebox.utils.FileboxConstant;
 
 public class ListActivity extends Activity implements OnItemClickListener
 {
@@ -19,10 +23,12 @@ public class ListActivity extends Activity implements OnItemClickListener
 	 * The listView of FileDto. 
 	 */
 	private ListView	lvFile;
+	
 	/**
-	 * L'identifiant de l'utilisateur.
+	 * ID Of user.
 	 */
-	private String mUserID;
+	private String mUserID;	
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,14 +36,21 @@ public class ListActivity extends Activity implements OnItemClickListener
 		overridePendingTransition(R.anim.activity_open_scale,R.anim.activity_close_translate);
 		setContentView(R.layout.activity_list);
 		
+		final Intent intent = new Intent(this, SyncService.class);
+		final Intent intentReceive = getIntent();
+
+		mUserID = intentReceive.getStringExtra(FileboxConstant.USERIDENTIFIANT);
+		
+		ListFilesSync service = new ListFilesSync(); 
+		intent.putExtra(FileboxConstant.SYNC_CLASS_INTENT, service);
+		startService(intent);
+		
 		lvFile = (ListView) findViewById(R.id.FileDtoList);
 		lvFile.setOnItemClickListener(this);
-		//TODO
-		//Envoyer la liste à l'adapteur recupérée depuis le serveur ICI
-		//lvFile.setAdapter(new FileItemArrayAdapter(this, listeFiles));
 		
-		final Intent intentReceive = getIntent();
-		mUserID = intentReceive.getStringExtra(FileboxConstant.USERIDENTIFIANT);
+		
+		FilesDto filesDto = intentReceive.getParcelableExtra(FileboxConstant.FILESDTO); // get the intent of the service
+		lvFile.setAdapter(new FileItemArrayAdapter(getApplicationContext(), filesDto.getListFile()));
 	}
 	
 	@Override

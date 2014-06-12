@@ -6,7 +6,6 @@ import retrofit.android.AndroidLog;
 import android.app.IntentService;
 import android.content.Intent;
 import fr.licpro.filebox.dto.error.CustomErrorHandler;
-import fr.licpro.filebox.dto.response.TokenDto;
 import fr.licpro.filebox.service.json.JacksonConverter;
 import fr.licpro.filebox.utils.FileboxConstant;
 
@@ -18,16 +17,13 @@ public class SyncService extends IntentService
 	/**
 	 * SyncService Tag for Log
 	 */
+	@SuppressWarnings("unused")
 	private static final String	TAG					= SyncService.class
 															.getSimpleName();
 	/**
 	 * Client rest
 	 */
 	protected IRestClient		mRestClient;
-	/**
-	 * Token
-	 */
-	private final TokenDto		mToken;
 
 	/**
 	 * Service constructor
@@ -35,9 +31,7 @@ public class SyncService extends IntentService
 	public SyncService()
 	{
 		super(SyncService.class.getSimpleName());
-		mToken = new TokenDto();			
 	}
-	
 	
 	@Override
 	public void onCreate() 
@@ -51,26 +45,10 @@ public class SyncService extends IntentService
 				.setLog(new AndroidLog(SyncService.class.getName()))
 				.setLogLevel(LogLevel.FULL)
 				.setConverter(new JacksonConverter())
-				.setErrorHandler(customError)  //-> fait planter l'app
+				.setErrorHandler(customError)
 				.build();
 		
 		mRestClient = restAdapter.create(IRestClient.class);
-	}
-
-	/**
-	 * List files of an user.
-	 */
-	public void listFiles()
-	{
-		mRestClient.getFiles(mToken.toString(), "0");
-	}
-
-	/**
-	 * List the content of a file or a folder.
-	 */
-	public void listContentFile()
-	{
-		// mRestClient.getContentFiles(mToken.toString(), hashid, "0");
 	}
 
 	@Override

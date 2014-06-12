@@ -18,6 +18,7 @@ public abstract class AbstractSync<T> implements ISync {
 	/**
 	 * Class Tag for Logger
 	 */
+	@SuppressWarnings("unused")
 	private static final String TAG = AbstractSync.class.getCanonicalName();
 
 	/**

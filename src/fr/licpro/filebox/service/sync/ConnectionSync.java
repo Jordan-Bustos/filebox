@@ -3,6 +3,8 @@ package fr.licpro.filebox.service.sync;
 import retrofit.RetrofitError;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import fr.licpro.filebox.dto.response.TokenDto;
 import fr.licpro.filebox.service.IRestClient;
 import fr.licpro.filebox.utils.FileboxConstant;
@@ -25,6 +27,11 @@ public class ConnectionSync extends AbstractSync<TokenDto> {
 	 * Password.
 	 */
 	private String mPassword;
+
+	/**
+	 * Token.
+	 */
+	private TokenDto mToken;
 
 	/**
 	 * Constructor.
@@ -59,15 +66,24 @@ public class ConnectionSync extends AbstractSync<TokenDto> {
 
 	@Override
 	protected TokenDto execute(final IRestClient pRestClient)
-			throws RetrofitError {
-		return pRestClient.getToken(mLogin, mPassword);
-	}
+			throws RetrofitError 
+			{
+		mToken = pRestClient.getToken(mLogin, mPassword);
+		return mToken;
+			}
 
 	@Override
 	protected void onSuccess() {
 		// broadcast for send the  connexion token done to the UI
 		Intent intent = new Intent(FileboxConstant.TOKEN_SUCCESS);
 		intent.setPackage(mContext.getPackageName());
+
+		SharedPreferences pref = mContext.getSharedPreferences(FileboxConstant.TOKEN_DTO, Context.MODE_PRIVATE);
+		Editor editor = pref.edit();
+		
+		editor.putString(FileboxConstant.TOKEN_PREF, mToken.getToken());
+		editor.commit();
+		
 		mContext.sendBroadcast(intent);
 	}
 

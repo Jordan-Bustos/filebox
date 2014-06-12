@@ -105,8 +105,6 @@ public class MainActivity extends Activity implements OnClickListener
 	{
 		if (view.getId() == R.id.btn_getToken)
 		{
-			Crouton.makeText(this, FileboxConstant.TENTATIVE_CO, Style.INFO).show();
-
 			final Intent intent = new Intent(this, SyncService.class);
 
 			String identifiant = ((EditText)findViewById(R.id.editTextIdentifiant)).getText().toString(); // jejebubu
@@ -116,6 +114,8 @@ public class MainActivity extends Activity implements OnClickListener
 					||
 					mdp != null && !mdp.trim().equals(""))
 			{
+				Crouton.makeText(this, FileboxConstant.TENTATIVE_CO, Style.INFO).show();
+
 				ConnectionSync connectionSync = new ConnectionSync(identifiant, mdp, getApplicationContext()); 
 				intent.putExtra(FileboxConstant.SYNC_CLASS_INTENT, connectionSync);
 				startService(intent);
@@ -133,10 +133,13 @@ public class MainActivity extends Activity implements OnClickListener
 		@Override
 		public void onReceive(final Context pParamContext, final Intent pParamIntent)
 		{
+			EditText mEditmdp = ((EditText)ActivityContainer.getActivity(FileboxConstant.ACTIVITY_MAIN).findViewById(R.id.editTextMdp));
+
 			if (pParamIntent.getAction().equals(FileboxConstant.TOKEN_SUCCESS))
 			{
 				Crouton.makeText(ActivityContainer.getActivity(FileboxConstant.ACTIVITY_MAIN),
 						FileboxConstant.CONNEXION_REUSSIE, Style.CONFIRM).show();
+				
 				EditText mEditidentifiant = ((EditText)ActivityContainer.getActivity(FileboxConstant.ACTIVITY_MAIN).findViewById(R.id.editTextIdentifiant));
 				Intent intent = new Intent(getApplicationContext(),ListActivity.class);
 				intent.putExtra(FileboxConstant.USERIDENTIFIANT, mEditidentifiant.getText().toString());
@@ -147,7 +150,7 @@ public class MainActivity extends Activity implements OnClickListener
 			{	
 				Crouton.makeText(ActivityContainer.getActivity(FileboxConstant.ACTIVITY_MAIN), 
 						FileboxConstant.CONNEXION_ECHOUEE, Style.ALERT).show();
-				EditText mEditmdp = ((EditText)ActivityContainer.getActivity(FileboxConstant.ACTIVITY_MAIN).findViewById(R.id.editTextMdp));
+				
 				mEditmdp.setText(FileboxConstant.EMPTY);
 			}
 		}

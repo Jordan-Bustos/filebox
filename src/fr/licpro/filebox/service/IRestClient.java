@@ -1,6 +1,6 @@
 package fr.licpro.filebox.service;
 
-import java.util.List;
+import retrofit.client.Response;
 import retrofit.http.GET;
 import retrofit.http.PUT;
 import retrofit.http.Path;
@@ -32,7 +32,7 @@ public interface IRestClient
 	 * @return List of files.
 	 */
 	@GET("/file/{token}")
-	List<FilesDto> getFiles(@Path("token") String token,
+	FilesDto getFiles(@Path("token") String token,
 			@Query("data") String timestamp);
 
 	/**
@@ -44,6 +44,6 @@ public interface IRestClient
 	 * @return The detail of the file or folder.
 	 */
 	@GET("/file/{token}/{hashid}")
-	List<FilesDto> getContentFiles(@Path("token") String token,
+	Response getContentFiles(@Path("token") String token,
 			@Path("hashid") String hashid, @Query("date") String timestamp);
 }

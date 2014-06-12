@@ -1,20 +1,17 @@
 package fr.licpro.filebox.activity;
 
-import de.keyboardsurfer.android.widget.crouton.Crouton;
-import de.keyboardsurfer.android.widget.crouton.Style;
-import fr.licpro.filebox.R;
-import fr.licpro.filebox.utils.FileboxConstant;
-import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.view.KeyEvent;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+import fr.licpro.filebox.R;
+import fr.licpro.filebox.utils.FileboxConstant;
 
 public class AccountActivity extends Activity implements OnClickListener
 {
@@ -60,18 +57,19 @@ public class AccountActivity extends Activity implements OnClickListener
 			alertDialogBuilder
 			.setMessage(R.string.confirmdisconnection)
 			.setCancelable(false)
-			.setPositiveButton("Oui",new DialogInterface.OnClickListener() 
+			.setPositiveButton(FileboxConstant.OUI,new DialogInterface.OnClickListener() 
 			{
 				public void onClick(DialogInterface dialog,int id) 
 				{
 					AccountActivity.this.finish();
-					//Enlever le token
-					//TODO
+					
+					// aller dans charet preferences et enlever le token
+					
 					final Intent intent = new Intent(mContext, MainActivity.class);
 					startActivity(intent);
 				}
 			})
-			.setNegativeButton("Non",new DialogInterface.OnClickListener() 
+			.setNegativeButton(FileboxConstant.NON,new DialogInterface.OnClickListener() 
 			{
 				public void onClick(DialogInterface dialog,int id) 
 				{
