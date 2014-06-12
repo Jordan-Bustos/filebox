@@ -7,19 +7,20 @@
     <uses-sdk
         android:minSdkVersion="15"
         android:targetSdkVersion="15" />
-    
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/dossier"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
             android:name="fr.licpro.filebox.activity.MainActivity"
-            android:label="@string/app_name" 
+            android:label="@string/app_name"
             android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar"
             android:windowSoftInputMode="adjustNothing" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,8 +28,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name=".service.SyncService"></service>
-        
+
+        <service android:name="fr.licpro.filebox.service.SyncService" >
+        </service>
+
+        <activity
+            android:name="fr.licpro.filebox.activity.ListActivity"
+            android:label=""
+            android:icon="@drawable/dossier_icon_bar" >
+        </activity>
+        <activity
+            android:name="fr.licpro.filebox.activity.FileDetailActivity"
+            android:label=""
+            android:icon="@drawable/dossier_icon_bar" >
+        </activity>
+        <activity
+            android:name="fr.licpro.filebox.activity.AccountActivity"
+            android:label=""
+            android:icon="@drawable/dossier_icon_bar" >
+        </activity>
     </application>
 
 </manifest>

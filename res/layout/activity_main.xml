@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="fr.licpro.filebox.activity.MainActivity"
-    tools:ignore="MergeRootFrame" >
+    tools:ignore="MergeRootFrame" 
+    android:background="@drawable/fileboxbackground">
 
     <TextView
         android:id="@+id/textView1"
@@ -13,7 +14,8 @@
         android:layout_above="@+id/editTextMdp"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="14dp"
-        android:text="@string/Identifiant" />
+        android:text="@string/Identifiant"
+        android:textColor="@android:color/background_dark" />
 
     <EditText
         android:id="@+id/editTextIdentifiant"
@@ -21,8 +23,9 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/btn_getToken"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="76dp"
+        android:layout_marginTop="116dp"
         android:inputType="text"
+        android:text="jejebubu"
         android:ems="10" />
 
     <TextView
@@ -31,7 +34,8 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/editTextMdp"
         android:layout_alignLeft="@+id/textView1"
-        android:text="@string/mdp" />
+        android:text="@string/mdp"
+        android:textColor="@android:color/background_dark" />
 
     <EditText
         android:id="@+id/editTextMdp"
@@ -40,6 +44,7 @@
         android:layout_alignLeft="@+id/editTextIdentifiant"
         android:layout_below="@+id/editTextIdentifiant"
         android:ems="10"
+        android:text="projet"
         android:inputType="textPassword" />
 
     <Button
@@ -49,6 +54,8 @@
         android:layout_below="@+id/editTextMdp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="17dp"
-        android:text="@string/Connexion" />
+        android:width="120dp"
+        android:text="@string/connexionaction" 
+        android:textSize="14sp"/>
 
 </RelativeLayout>

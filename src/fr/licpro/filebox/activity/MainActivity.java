@@ -9,7 +9,6 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -34,16 +33,16 @@ public class MainActivity extends Activity implements OnClickListener
 	protected void onCreate(final Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+		overridePendingTransition(R.anim.activity_open_translate,R.anim.activity_close_scale);
 		setContentView(R.layout.activity_main);
 		if (savedInstanceState == null)
 		{
 			getFragmentManager().beginTransaction()
 			.add(R.id.container, new PlaceholderFragment()).commit();
 		}
-		// TODO Add intent to launch service
 		final Button btn_getToken = (Button) findViewById(R.id.btn_getToken);
 		btn_getToken.setOnClickListener(this);
-
+	   
 		// Save the activity
 		ActivityContainer.putActivity(FileboxConstant.ACTIVITY_MAIN, this);
 	}
@@ -65,7 +64,7 @@ public class MainActivity extends Activity implements OnClickListener
 		{
 			unregisterReceiver(mSyncDoneReceiver);
 		}
-		super.onStop();		
+		super.onStop();	
 	}
 
 	@Override
@@ -74,20 +73,6 @@ public class MainActivity extends Activity implements OnClickListener
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(final MenuItem item)
-	{
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		final int id = item.getItemId();
-		if (id == R.id.action_settings)
-		{
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
 	}
 
 	/**
@@ -108,6 +93,7 @@ public class MainActivity extends Activity implements OnClickListener
 			return rootView;
 		}
 	}
+	
 
 	/* _________________________________________________________ */
 	/**
@@ -119,7 +105,6 @@ public class MainActivity extends Activity implements OnClickListener
 	{
 		if (view.getId() == R.id.btn_getToken)
 		{
-			//Toast.makeText(getApplicationContext(), FileboxConstant.TENTATIVE_CO, Toast.LENGTH_SHORT).show();
 			Crouton.makeText(this, FileboxConstant.TENTATIVE_CO, Style.INFO).show();
 
 			final Intent intent = new Intent(this, SyncService.class);
@@ -137,7 +122,6 @@ public class MainActivity extends Activity implements OnClickListener
 			}
 			else
 				Crouton.makeText(this, FileboxConstant.RENSEIGNEZ_ID_MDP, Style.ALERT).show();
-			//Toast.makeText(getApplicationContext(), FileboxConstant.RENSEIGNEZ_ID_MDP, Toast.LENGTH_SHORT).show();			
 		}
 	}
 
@@ -151,16 +135,20 @@ public class MainActivity extends Activity implements OnClickListener
 		{
 			if (pParamIntent.getAction().equals(FileboxConstant.TOKEN_SUCCESS))
 			{
-				//Toast.makeText(pParamContext, FileboxConstant.CONNEXION_REUSSIE, Toast.LENGTH_SHORT).show();
 				Crouton.makeText(ActivityContainer.getActivity(FileboxConstant.ACTIVITY_MAIN),
 						FileboxConstant.CONNEXION_REUSSIE, Style.CONFIRM).show();
-
+				EditText mEditidentifiant = ((EditText)ActivityContainer.getActivity(FileboxConstant.ACTIVITY_MAIN).findViewById(R.id.editTextIdentifiant));
+				Intent intent = new Intent(getApplicationContext(),ListActivity.class);
+				intent.putExtra(FileboxConstant.USERIDENTIFIANT, mEditidentifiant.getText().toString());
+				startActivity(intent);
+				
 			}
 			else if (pParamIntent.getAction().equals(FileboxConstant.TOKEN_ERROR))
-			{
-				//Toast.makeText(pParamContext, FileboxConstant.CONNEXION_ECHOUEE, Toast.LENGTH_SHORT).show();
+			{	
 				Crouton.makeText(ActivityContainer.getActivity(FileboxConstant.ACTIVITY_MAIN), 
 						FileboxConstant.CONNEXION_ECHOUEE, Style.ALERT).show();
+				EditText mEditmdp = ((EditText)ActivityContainer.getActivity(FileboxConstant.ACTIVITY_MAIN).findViewById(R.id.editTextMdp));
+				mEditmdp.setText(FileboxConstant.EMPTY);
 			}
 		}
 	}

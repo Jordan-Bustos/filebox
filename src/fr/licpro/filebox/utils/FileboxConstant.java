@@ -12,6 +12,11 @@ public final class FileboxConstant {
 	public static final String URL_SERVER = "";
 	
 	/**
+	 * Empty string.
+	 */
+	public static final String EMPTY = "";
+	
+	/**
 	 * Token success.
 	 */
 	public static final String TOKEN_SUCCESS = "fr.iut.licpro.filebox.TOKENSUCESS";
@@ -42,19 +47,29 @@ public final class FileboxConstant {
 	public static final String RENSEIGNEZ_ID_MDP = "Veuillez renseigner identifiant et mot de passe.";
 
 	/**
-	 * Connexion réussie.
+	 * Connexion r√©ussie.
 	 */
-	public static final String CONNEXION_REUSSIE = "Connexion réussie";
+	public static final String CONNEXION_REUSSIE = "Connexion r√©ussie";
 
 	/**
-	 * Connexion échouée.
+	 * Connexion √©chou√©e.
 	 */
-	public static final String CONNEXION_ECHOUEE = "Connexion échouée";
+	public static final String CONNEXION_ECHOUEE = "Connexion √©chou√©e";
+	
+	/**
+	 * D√©connexion.
+	 */
+	public static final String DECONNEXION = "D√©connexion ...";
 	
 	/**
 	 * Key of the main activity.
 	 */
 	public static final String ACTIVITY_MAIN = "Main activity";
+	
+	/**
+	 * User Identifiant.
+	 */
+	public static final String USERIDENTIFIANT = "userId";
 	
 	/**
 	 * Private constructor.
