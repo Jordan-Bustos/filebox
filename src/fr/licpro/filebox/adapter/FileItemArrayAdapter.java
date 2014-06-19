@@ -3,13 +3,19 @@ package fr.licpro.filebox.adapter;
 import java.util.List;
 
 import fr.licpro.filebox.R;
+import fr.licpro.filebox.R.drawable;
 import fr.licpro.filebox.dto.commons.FileDto;
+import fr.licpro.filebox.dto.commons.ViewHolder;
+import fr.licpro.filebox.dto.enums.FileTypeEnum;
 
 import android.content.Context;
 import android.database.DataSetObserver;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 public class FileItemArrayAdapter extends ArrayAdapter<FileDto> 
 {
@@ -93,8 +99,38 @@ public class FileItemArrayAdapter extends ArrayAdapter<FileDto>
 	public View getView(final int position, View convertView,
 			final ViewGroup parent)
 	{
-		//TODO
-		//ViewHolder.get(convertView, pId);
+		ViewHolder holder;
+		if (convertView == null)
+		{
+			convertView = LayoutInflater.from(getContext()).inflate(
+					R.layout.file_item, null);
+			holder = new ViewHolder();
+			holder.mName = (TextView) convertView.findViewById(R.id.name);
+			holder.mType = (ImageView) convertView.findViewById(R.id.imageView1);
+			convertView.setTag(holder);
+		}
+		else
+		{
+			holder = (ViewHolder) convertView.getTag();
+		}
+		final FileDto s = mValues.get(position);
+		holder.mName.setText(s.getName());
+		if (s.isIsFolder())
+			holder.mType.setImageDrawable(getContext().getResources().getDrawable(drawable.dossier));
+		else if(s.getFileType().equals(FileTypeEnum.HTML))
+			holder.mType.setImageDrawable(getContext().getResources().getDrawable(drawable.html));
+		else if(s.getFileType().equals(FileTypeEnum.JPEG))
+			holder.mType.setImageDrawable(getContext().getResources().getDrawable(drawable.jpeg));
+		else if(s.getFileType().equals(FileTypeEnum.PNG))
+			holder.mType.setImageDrawable(getContext().getResources().getDrawable(drawable.png));
+		else if(s.getFileType().equals(FileTypeEnum.PDF))
+			holder.mType.setImageDrawable(getContext().getResources().getDrawable(drawable.pdf));
+		else if(s.getFileType().equals(FileTypeEnum.MP3))
+			holder.mType.setImageDrawable(getContext().getResources().getDrawable(drawable.mp3));
+		else if(s.getFileType().equals(FileTypeEnum.VCARD))
+			holder.mType.setImageDrawable(getContext().getResources().getDrawable(drawable.vcard));
+		else //Document txt
+			holder.mType.setImageDrawable(getContext().getResources().getDrawable(drawable.fichier));
 		return convertView;
 	}
 

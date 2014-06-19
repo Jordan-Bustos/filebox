@@ -2,9 +2,13 @@ package fr.licpro.filebox.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,6 +23,11 @@ public class AccountActivity extends Activity implements OnClickListener
 	 * The Context.
 	 */
 	private AccountActivity mContext;
+	
+	/**
+	 * The user's ID.
+	 */
+	private String mUserID;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -29,19 +38,32 @@ public class AccountActivity extends Activity implements OnClickListener
 		btn_deconnexion.setOnClickListener(this);
 
 		final Intent intentReceive = getIntent();
-		String mUserID = intentReceive.getStringExtra(FileboxConstant.USERIDENTIFIANT);
+		mUserID = intentReceive.getStringExtra(FileboxConstant.USERIDENTIFIANT);
 		TextView tv_accountName = (TextView) findViewById(R.id.tvaccountname);
 		tv_accountName.setText(mUserID);
 		this.mContext = this;
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+	public boolean onCreateOptionsMenu(Menu menu) 
+	{
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.account, menu);
 		return true;
 	}
 
+	public boolean onKeyDown(int keyCode, KeyEvent event) 
+	 {
+		 if ((keyCode == KeyEvent.KEYCODE_BACK)) 
+		 {
+			 Intent intent = new Intent(this,ListActivity.class);
+			 intent.putExtra(FileboxConstant.USERIDENTIFIANT, mUserID);
+			 startActivity(intent);
+		     finish();   
+		 }
+		 return true;
+	}
+	
 	/* _________________________________________________________ */
 	/**
 	 * @param view
@@ -63,10 +85,15 @@ public class AccountActivity extends Activity implements OnClickListener
 				{
 					AccountActivity.this.finish();
 					
-					// aller dans charet preferences et enlever le token
+					//Delete the TOKEN
+					SharedPreferences pref = getSharedPreferences(FileboxConstant.TOKEN_DTO, Context.MODE_PRIVATE);
+					Editor edit = pref.edit();
+					edit.remove(FileboxConstant.TOKEN_PREF);
+					edit.commit();
 					
 					final Intent intent = new Intent(mContext, MainActivity.class);
 					startActivity(intent);
+					finish();
 				}
 			})
 			.setNegativeButton(FileboxConstant.NON,new DialogInterface.OnClickListener() 

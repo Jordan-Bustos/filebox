@@ -85,6 +85,11 @@ public final class FileboxConstant {
 	 * FILES DTO
 	 */
 	public static final String FILESDTO = "File dto";
+	
+	/**
+	 * FILES DTO VALUE
+	 */
+	public static final String FILESDTOVALUE = "File dto value";
 
 	/**
 	 * File name token dto

@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -73,6 +74,15 @@ public class MainActivity extends Activity implements OnClickListener
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
+	}
+	
+	public boolean onKeyDown(int keyCode, KeyEvent event) 
+	 {
+		 if ((keyCode == KeyEvent.KEYCODE_BACK)) 
+		 {
+		    finish();   
+		 }
+		 return true;
 	}
 
 	/**
@@ -144,6 +154,7 @@ public class MainActivity extends Activity implements OnClickListener
 				Intent intent = new Intent(getApplicationContext(),ListActivity.class);
 				intent.putExtra(FileboxConstant.USERIDENTIFIANT, mEditidentifiant.getText().toString());
 				startActivity(intent);
+				finish();
 				
 			}
 			else if (pParamIntent.getAction().equals(FileboxConstant.TOKEN_ERROR))

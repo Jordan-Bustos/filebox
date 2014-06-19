@@ -1,8 +1,12 @@
 package fr.licpro.filebox.activity;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,6 +33,10 @@ public class ListActivity extends Activity implements OnItemClickListener
 	 */
 	private String mUserID;	
 
+	/**
+	 * Broadcast receiver.
+	 */
+	private SyncDoneReceiver mSyncDoneReceiver;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +54,16 @@ public class ListActivity extends Activity implements OnItemClickListener
 		startService(intent);
 		
 		lvFile = (ListView) findViewById(R.id.FileDtoList);
-		lvFile.setOnItemClickListener(this);
-		
-		
-		FilesDto filesDto = intentReceive.getParcelableExtra(FileboxConstant.FILESDTO); // get the intent of the service
-		lvFile.setAdapter(new FileItemArrayAdapter(getApplicationContext(), filesDto.getListFile()));
+		lvFile.setOnItemClickListener(this);	
+	}
+	
+	@Override
+	protected void onStart()
+	{
+		super.onStart();
+
+		mSyncDoneReceiver = new SyncDoneReceiver();
+		registerReceiver(mSyncDoneReceiver, new IntentFilter(FileboxConstant.FILESDTO));
 	}
 	
 	@Override
@@ -69,6 +82,7 @@ public class ListActivity extends Activity implements OnItemClickListener
 				Intent intent = new Intent(getApplicationContext(),AccountActivity.class);
 				intent.putExtra(FileboxConstant.USERIDENTIFIANT, mUserID);
 				startActivity(intent);
+				finish();
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);
@@ -91,11 +105,36 @@ public class ListActivity extends Activity implements OnItemClickListener
 		final FileDto selectedFile = (FileDto) lvFile.getItemAtPosition(position);
 		final Intent intent = new Intent(getBaseContext(),
 				FileDetailActivity.class);
-		//final Bundle bundleToSend = new Bundle();
-		//Ajouter au bundle les infos necessaires.
-		//TODO
-		//intent.putExtras(bundleToSend);
+		intent.putExtra(FileboxConstant.FILESDTOVALUE, selectedFile);
 		intent.putExtra(FileboxConstant.USERIDENTIFIANT, mUserID);
 		startActivity(intent);
+		finish();
+	}
+	
+	 public boolean onKeyDown(int keyCode, KeyEvent event) 
+	 {
+		 if ((keyCode == KeyEvent.KEYCODE_BACK)) 
+		 {
+		    finish();   
+		 }
+		 return true;
+	}
+	
+	/**
+	 * Broadcast receiver.	
+	 */
+	private class SyncDoneReceiver extends BroadcastReceiver
+	{			
+		@Override
+		public void onReceive(final Context pParamContext, final Intent pParamIntent)
+		{
+			
+			if (pParamIntent.getAction().equals(FileboxConstant.FILESDTO))
+			{
+				FilesDto filesDto = (FilesDto) pParamIntent.getSerializableExtra(FileboxConstant.FILESDTOVALUE); 
+				lvFile.setAdapter(new FileItemArrayAdapter(getApplicationContext(), filesDto.getListFile()));
+				lvFile.invalidate();
+			}
+		}
 	}
 }

@@ -1,10 +1,12 @@
 package fr.licpro.filebox.activity;
 
 import fr.licpro.filebox.R;
+import fr.licpro.filebox.dto.commons.FileDto;
 import fr.licpro.filebox.utils.FileboxConstant;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -23,6 +25,9 @@ public class FileDetailActivity extends Activity
 		
 		final Intent intentReceive = getIntent();
 		mUserID = intentReceive.getStringExtra(FileboxConstant.USERIDENTIFIANT);
+		FileDto fileDto = (FileDto) intentReceive.getSerializableExtra(FileboxConstant.FILESDTOVALUE); 
+		//TODO
+		//Traiter le fichier en question
 	}
 
 	@Override
@@ -30,6 +35,18 @@ public class FileDetailActivity extends Activity
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.file_detail, menu);
 		return true;
+	}
+	
+	public boolean onKeyDown(int keyCode, KeyEvent event) 
+	 {
+		 if ((keyCode == KeyEvent.KEYCODE_BACK)) 
+		 {
+			 Intent intent = new Intent(this,ListActivity.class);
+			 intent.putExtra(FileboxConstant.USERIDENTIFIANT, mUserID);
+			 startActivity(intent);
+		     finish();   
+		 }
+		 return true;
 	}
 	
 	@Override
@@ -41,6 +58,7 @@ public class FileDetailActivity extends Activity
 				Intent intent = new Intent(getApplicationContext(),AccountActivity.class);
 				intent.putExtra(FileboxConstant.USERIDENTIFIANT, mUserID);
 				startActivity(intent);
+				finish();
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);

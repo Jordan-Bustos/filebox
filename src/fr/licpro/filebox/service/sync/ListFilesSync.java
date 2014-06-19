@@ -7,7 +7,6 @@ import retrofit.RetrofitError;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import fr.licpro.filebox.activity.ListActivity;
 import fr.licpro.filebox.dto.response.FilesDto;
 import fr.licpro.filebox.service.IRestClient;
 import fr.licpro.filebox.utils.FileboxConstant;
@@ -22,7 +21,7 @@ public class ListFilesSync extends AbstractSync<FilesDto> {
 	 * Serial ID.
 	 */
 	private static final long serialVersionUID = 1093780033789915549L;
-	
+
 	/**
 	 * The filesDto.
 	 */
@@ -38,16 +37,16 @@ public class ListFilesSync extends AbstractSync<FilesDto> {
 	}
 
 	@Override
-	protected void onSuccess() {
-		// broadcast for send the  list files geted to the UI
-
-		Intent intent = new Intent(mContext, ListActivity.class);
-		
-		intent.putExtra(FileboxConstant.FILESDTO, mFilesDto);
-		mContext.startActivity(intent);
+	protected void onSuccess() 
+	{
+		Intent intent = new Intent(FileboxConstant.FILESDTO);
+		intent.setPackage(mContext.getPackageName());
+		intent.putExtra(FileboxConstant.FILESDTOVALUE, mFilesDto);
+		mContext.sendBroadcast(intent);
 	}
 
 	@Override
-	protected void onError(Exception e) {		
+	protected void onError(Exception e) 
+	{		
 	}
 }
