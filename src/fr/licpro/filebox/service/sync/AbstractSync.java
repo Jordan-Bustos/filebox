@@ -51,8 +51,8 @@ public abstract class AbstractSync<T> implements ISync {
 		try {
 			mData = execute(pRestClient);
 			onSuccess();
-		} catch (RetrofitError e) {
-			// TODO extract exception
+		} catch (RetrofitError e) 
+		{
 			onError(e);
 		}
 		return success;

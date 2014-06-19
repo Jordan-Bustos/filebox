@@ -5,43 +5,60 @@ package fr.licpro.filebox.dto.commons;
 
 import fr.licpro.filebox.dto.GenericDto;
 import fr.licpro.filebox.dto.enums.FileTypeEnum;
+import fr.licpro.filebox.utils.FileboxConstant;
+
 import java.util.Date;
+
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 
 /**
  * File DTO
  *
  * @author julien
  */
+@DatabaseTable(tableName=FileboxConstant.DATABASE_NAME)
 public class FileDto extends GenericDto {
 
     /**
 	 * Serial ID.
 	 */
 	private static final long serialVersionUID = -5039069813601889015L;
+	
+	/**
+	 * Id of the object in database.
+	 */
+	@DatabaseField(generatedId = true)
+	private long id;
 
 	/**
      * File name
      */
+	@DatabaseField
     private String mName;
 
     /**
      * File id Hash
      */
+	@DatabaseField
     private String mHashId;
 
     /**
      * Is folder
      */
+	@DatabaseField
     private Boolean mIsFolder;
 
     /**
      * File type
      */
+	@DatabaseField
     private FileTypeEnum mFileType;
 
     /**
      * Last modification date
      */
+	@DatabaseField
     private Date lastModification;
 
     /**
@@ -107,5 +124,21 @@ public class FileDto extends GenericDto {
     public void setLastModification(Date lastModification) {
         this.lastModification = lastModification;
     }
+
+	/**
+	 * Getter of the id.
+	 * @return the id
+	 */
+	public long getId() {
+		return id;
+	}
+
+	/**
+	 * Setter of the id.
+	 * @param id the id to set
+	 */
+	public void setId(long id) {
+		this.id = id;
+	}
 
 }

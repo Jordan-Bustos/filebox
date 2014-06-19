@@ -35,19 +35,19 @@ public class CustomErrorHandler implements ErrorHandler {
 	@Override
 	public Throwable handleError(RetrofitError error) 
 	{
-		HttpExceptionDto errorDto = (HttpExceptionDto) error.getBodyAs(HttpExceptionDto.class);
-
-		Intent it = new Intent (FileboxConstant.TOKEN_ERROR);
-		it.setPackage(FileboxConstant.PACKAGE);
-		if (errorDto != null)
+		if (!error.isNetworkError()) // for the getBodyAs !
 		{
-			it.putExtra(it.getAction(), errorDto);
+			HttpExceptionDto errorDto = (HttpExceptionDto) error.getBodyAs(HttpExceptionDto.class);
+	
+			Intent it = new Intent (FileboxConstant.TOKEN_ERROR);
+			it.setPackage(FileboxConstant.PACKAGE);
+			if (errorDto != null)
+			{
+				it.putExtra(it.getAction(), errorDto);
+			}			
+			mContext.sendBroadcast(it);
 		}
-		
-		mContext.sendBroadcast(it);
-		
 		return error;
-
 	}
 
 }

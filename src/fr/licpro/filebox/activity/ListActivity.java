@@ -26,12 +26,17 @@ public class ListActivity extends Activity implements OnItemClickListener
 	/** 
 	 * The listView of FileDto. 
 	 */
-	private ListView	lvFile;
+	private ListView	mLvFile;
 	
 	/**
 	 * ID Of user.
 	 */
 	private String mUserID;	
+	
+	/**
+	 * The id of the previous folder.
+	 */
+	private static long mIdOfPreviousFolder;
 
 	/**
 	 * Broadcast receiver.
@@ -39,7 +44,8 @@ public class ListActivity extends Activity implements OnItemClickListener
 	private SyncDoneReceiver mSyncDoneReceiver;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) 
+	{
 		super.onCreate(savedInstanceState);
 		overridePendingTransition(R.anim.activity_open_scale,R.anim.activity_close_translate);
 		setContentView(R.layout.activity_list);
@@ -53,8 +59,8 @@ public class ListActivity extends Activity implements OnItemClickListener
 		intent.putExtra(FileboxConstant.SYNC_CLASS_INTENT, service);
 		startService(intent);
 		
-		lvFile = (ListView) findViewById(R.id.FileDtoList);
-		lvFile.setOnItemClickListener(this);	
+		mLvFile = (ListView) findViewById(R.id.FileDtoList);
+		mLvFile.setOnItemClickListener(this);	
 	}
 	
 	@Override
@@ -102,13 +108,23 @@ public class ListActivity extends Activity implements OnItemClickListener
 	public void onItemClick(final AdapterView<?> arg0, final View v,
 			final int position, final long arg3)
 	{
-		final FileDto selectedFile = (FileDto) lvFile.getItemAtPosition(position);
-		final Intent intent = new Intent(getBaseContext(),
-				FileDetailActivity.class);
-		intent.putExtra(FileboxConstant.FILESDTOVALUE, selectedFile);
-		intent.putExtra(FileboxConstant.USERIDENTIFIANT, mUserID);
-		startActivity(intent);
-		finish();
+		final FileDto selectedFile = (FileDto) mLvFile.getItemAtPosition(position);
+		
+		if(selectedFile.isIsFolder())
+		{
+			mIdOfPreviousFolder = selectedFile.getId();	
+			
+			// TODO sort list of files
+		}
+		else
+		{
+			final Intent intent = new Intent(getBaseContext(),
+					FileDetailActivity.class);
+			intent.putExtra(FileboxConstant.FILESDTOVALUE, selectedFile);
+			intent.putExtra(FileboxConstant.USERIDENTIFIANT, mUserID);
+			startActivity(intent);
+			finish();
+		}				
 	}
 	
 	 public boolean onKeyDown(int keyCode, KeyEvent event) 
@@ -132,8 +148,8 @@ public class ListActivity extends Activity implements OnItemClickListener
 			if (pParamIntent.getAction().equals(FileboxConstant.FILESDTO))
 			{
 				FilesDto filesDto = (FilesDto) pParamIntent.getSerializableExtra(FileboxConstant.FILESDTOVALUE); 
-				lvFile.setAdapter(new FileItemArrayAdapter(getApplicationContext(), filesDto.getListFile()));
-				lvFile.invalidate();
+				mLvFile.setAdapter(new FileItemArrayAdapter(getApplicationContext(), filesDto.getListFile()));
+				mLvFile.invalidate();
 			}
 		}
 	}

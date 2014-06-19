@@ -70,8 +70,7 @@ public class FileItemArrayAdapter extends ArrayAdapter<FileDto>
 	@Override
 	public long getItemId(final int location)
 	{
-		//TODO
-		return mValues.get(location).getHashId().hashCode();	//A verifier !
+		return mValues.get(location).getId();
 	}
 
 	/* _________________________________________________________ */

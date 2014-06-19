@@ -105,6 +105,21 @@ public final class FileboxConstant {
 	 * User password.
 	 */
 	public static final String USERPASSWORD = "userpassword";
+
+	/**
+	 * Name of Database
+	 */
+	public static final String DATABASE_NAME = "FileDTODatabase";
+
+	/**
+	 * Error insert item database.
+	 */
+	public static final String EROR_CREATION_BDD = "Erreur de création dans la base de données";
+
+	/**
+	 * Error delete item database.
+	 */
+	public static final String EROR_SUPPRESSION_BDD = "Erreur de suppression dans la base de données";
 	
 	/**
 	 * Private constructor.

@@ -26,8 +26,7 @@ public class FileDetailActivity extends Activity
 		final Intent intentReceive = getIntent();
 		mUserID = intentReceive.getStringExtra(FileboxConstant.USERIDENTIFIANT);
 		FileDto fileDto = (FileDto) intentReceive.getSerializableExtra(FileboxConstant.FILESDTOVALUE); 
-		//TODO
-		//Traiter le fichier en question
+		//TODO Traiter le fichier en question
 	}
 
 	@Override
