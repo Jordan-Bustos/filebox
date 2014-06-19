@@ -37,7 +37,13 @@ public final class R {
         public static final int fichier=0x7f020002;
         public static final int fileboxbackground=0x7f020003;
         public static final int fleche=0x7f020004;
-        public static final int ic_launcher=0x7f020005;
+        public static final int html=0x7f020005;
+        public static final int ic_launcher=0x7f020006;
+        public static final int jpeg=0x7f020007;
+        public static final int mp3=0x7f020008;
+        public static final int pdf=0x7f020009;
+        public static final int png=0x7f02000a;
+        public static final int vcard=0x7f02000b;
     }
     public static final class id {
         public static final int FileDtoList=0x7f090003;
